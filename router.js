@@ -17,9 +17,23 @@
         .done(function (data) {
           viewElement.innerHTML = data;
           cache[hash] = data;
+          require();
         });
 
     console.log(fileName);
+  }
+
+  /**
+   * Require dependencies scripts for the given HTML snippet.
+   * HTML snippet.
+   */
+  function require() {
+    $("#view").find("script").each(function (index, dep) {
+      var src = dep.getAttribute("src");
+      if (src) {
+        $.getScript(src);
+      }
+    });
   }
 
   if (!$) {
@@ -54,6 +68,7 @@
       var el = $.find(".nav a[href='".concat(this.location.hash, "']"))[0];
       el.click();
       $(this).trigger('hashchange');
+
     } else {
       this.location.hash = defaultHash;
     }
