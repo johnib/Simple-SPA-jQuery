@@ -1,5 +1,11 @@
 "use strict";
 (function ($) {
+  var authHashes = ['#calculator'], authenticated = false;
+
+  function authRequired(hash) {
+    return $.inArray(hash, authHashes) > -1;
+  }
+
   /**
    * Updates the view with the html snippet downloaded using Ajax request.
    * Caches the view contents for later use.
@@ -13,12 +19,16 @@
     }
     var fileName = viewsRoot.concat(hash.substr(1), ".html");
 
-    $.ajax(fileName)
+    if (!authRequired(hash) || authenticated) {
+      $.ajax(fileName)
         .done(function (data) {
           viewElement.innerHTML = data;
           cache[hash] = data;
           require();
         });
+    } else {
+      window.location.hash = "login";
+    }
 
     console.log(fileName);
   }
