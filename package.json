@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/johnib/Simple-SPA-jQuery/issues"
   },
-  "homepage": "https://github.com/johnib/Simple-SPA-jQuery#readme"
+  "homepage": "https://github.com/johnib/Simple-SPA-jQuery#readme",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "express": "^4.13.4",
+    "morgan": "^1.7.0"
+  }
 }
