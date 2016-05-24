@@ -15,6 +15,7 @@
   function updateView(hash) {
     if (cache[hash]) {
       viewElement.innerHTML = cache[hash];
+      require();
       return;
     }
     var fileName = viewsRoot.concat(hash.substr(1), ".html");

@@ -14,9 +14,23 @@ app.get('/', function (req, res) {
 
 // handle authentication request
 app.post('/login', bodyParser.json(), function (req, res) {
+  console.log(req.body);
 
+  if (userdb[req.body.username] === req.body.password) {
+    console.log("user authenticated successfully");
+    res.sendStatus(200);
+
+  } else {
+    console.log("Bad credentials");
+    res.sendStatus(401);
+  }
 });
 
 app.listen(port, function () {
   console.log("listening on port: " + port, "http://localhost:" + port);
 });
+
+var userdb = {
+  "21232f297a57a5a743894a0e4a801fc3": "21232f297a57a5a743894a0e4a801fc3",
+  "961d8839cba1c489b858de3cc13e62a1": "c1f80eddea77f14650a2062dda3eb15c"
+};
