@@ -1,0 +1,19 @@
+{
+  "name": "simple-spa-jquery",
+  "version": "1.0.0",
+  "description": "Simple SPA creaeted using jQuery. No other framework used.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johnib/Simple-SPA-jQuery.git"
+  },
+  "author": "Jonathan Rubin Yaniv",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/johnib/Simple-SPA-jQuery/issues"
+  },
+  "homepage": "https://github.com/johnib/Simple-SPA-jQuery#readme"
+}
