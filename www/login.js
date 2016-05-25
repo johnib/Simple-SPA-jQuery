@@ -10,9 +10,13 @@
       data: JSON.stringify(credentials),
       dataType: 'json',
       contentType: "application/json; charset=utf-8"
-    }).done(function (res) {
+    }).always(function (res) {
       console.log(res);
-    })
+      if (res.status === 200) {
+        window.authenticated = true;
+        window.location.hash = window.lastView;
+      }
+    });
   }
 
   $('#loginForm').submit(function () {

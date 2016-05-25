@@ -1,6 +1,16 @@
 "use strict";
 (function ($) {
-  var authHashes = ['#calculator'], authenticated = false;
+  if (!$) {
+    console.error("jQuery is not loaded");
+    return;
+  }
+
+  var viewsRoot = "views/";
+  var cache = {};
+  var viewElement = $("#view")[0];
+  var defaultHash = $.find(".nav .active a")[0].getAttribute("href");
+  var authHashes = ['#calculator'];
+  window.authenticated = false;
 
   function authRequired(hash) {
     return $.inArray(hash, authHashes) > -1;
@@ -20,7 +30,7 @@
     }
     var fileName = viewsRoot.concat(hash.substr(1), ".html");
 
-    if (!authRequired(hash) || authenticated) {
+    if (!authRequired(hash) || window.authenticated) {
       $.ajax(fileName)
         .done(function (data) {
           viewElement.innerHTML = data;
@@ -28,6 +38,7 @@
           require();
         });
     } else {
+      window.lastView = window.location.hash;
       window.location.hash = "login";
     }
 
@@ -46,16 +57,6 @@
       }
     });
   }
-
-  if (!$) {
-    console.error("jQuery is not loaded");
-    return;
-  }
-
-  var viewsRoot = "views/";
-  var cache = {};
-  var viewElement = $("#view")[0];
-  var defaultHash = $.find(".nav .active a")[0].getAttribute("href");
 
   // event handler for nav bar view change
   $(".nav a").on("click", function () {
