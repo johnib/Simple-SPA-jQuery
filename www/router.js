@@ -8,8 +8,8 @@
   var viewsRoot = "views/";
   var cache = {};
   var viewElement = $("#view")[0];
-  var defaultHash = $.find(".nav .active a")[0].getAttribute("href");
   var authHashes = ['#calculator'];
+  window.defaultHash = $.find(".nav .active a")[0].getAttribute("href");
   window.authenticated = false;
 
   function authRequired(hash) {
@@ -30,7 +30,7 @@
     }
     var fileName = viewsRoot.concat(hash.substr(1), ".html");
 
-    if (!authRequired(hash) || window.authenticated) {
+    if (!authRequired(hash) || window.authenticated.status) {
       $.ajax(fileName)
         .done(function (data) {
           viewElement.innerHTML = data;

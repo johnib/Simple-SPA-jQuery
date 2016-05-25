@@ -26,6 +26,24 @@ app.post('/login', bodyParser.json(), function (req, res) {
   }
 });
 
+var calcHistory = {};
+app.post('/calc/value/:val', function (req, res) {
+  if (req.params.val) {
+    calcHistory.last = req.params.val;
+    console.log(calcHistory);
+  }
+
+  res.end();
+});
+
+app.get('/calc/value', function (req, res) {
+  if (calcHistory.last) {
+    res.send(JSON.stringify(calcHistory));
+  }
+
+  res.end();
+});
+
 app.listen(port, function () {
   console.log("listening on port: " + port, "http://localhost:" + port);
 });

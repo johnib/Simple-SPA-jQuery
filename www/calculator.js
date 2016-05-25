@@ -1,9 +1,18 @@
 (function ($) {
-  console.log("calculator initialized");
-
   if (!$) {
     console.error("this module depends on jQuery");
     return;
+  }
+
+  if (window.authenticated.status) {
+    $.ajax('/calc/value')
+      .done(function (res) {
+        debugger;
+        if (res) {
+          var value = JSON.parse(res).last;
+          updateResultWith(value);
+        }
+      })
   }
 
   // ignore non-digits keystrokes
@@ -15,21 +24,25 @@
 
   $("#operators").click(function (e) {
     var operand = e.target.textContent,
-        values = getValues();
+      values = getValues(),
+      calcValue;
 
     switch (operand) {
       case '+':
-        updateResultWith(sum(values.numerator, values.denominator));
+        calcValue = sum(values.numerator, values.denominator);
         break;
       case '-':
-        updateResultWith(subtract(values.numerator, values.denominator));
+        calcValue = subtract(values.numerator, values.denominator);
         break;
       case '/':
-        updateResultWith(divide(values.numerator, values.denominator));
+        calcValue = divide(values.numerator, values.denominator);
         break;
       case '*':
-        updateResultWith(multiply(values.numerator, values.denominator));
+        calcValue = multiply(values.numerator, values.denominator);
     }
+
+    updateResultWith(calcValue);
+    updateServerWithResult(calcValue);
   });
 
   function getValues() {
@@ -37,6 +50,15 @@
     var denominator = Number($("#denominator")[0].value) || 0;
 
     return {numerator: numerator, denominator: denominator};
+  }
+
+  function updateServerWithResult(result) {
+    $.ajax({
+      url: '/calc/value/' + result,
+      method: 'POST'
+    }).fail(function (err) {
+      console.log(err);
+    });
   }
 
   function updateResultWith(result) {

@@ -13,8 +13,11 @@
     }).always(function (res) {
       console.log(res);
       if (res.status === 200) {
-        window.authenticated = true;
-        window.location.hash = window.lastView;
+        window.authenticated = {
+          status: true,
+          username: credentials.username
+        };
+        window.location.hash = window.lastView || window.defaultHash;
       }
     });
   }
