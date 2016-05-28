@@ -4,6 +4,8 @@
   "description": "Simple SPA creaeted using jQuery. No other framework used.",
   "main": "server.js",
   "scripts": {
+    "postinstall": "bower install",
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
